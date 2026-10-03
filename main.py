@@ -70,9 +70,7 @@ def parens_match_iterative(mylist):
     >>>parens_match_iterative(['('])
     False
     """
-    ### TODO
     return iterate(parens_update, 0, mylist) == 0
-    ###
 
 
 def parens_update(current_output, next_input):
@@ -87,9 +85,11 @@ def parens_update(current_output, next_input):
     Returns:
       the updated value of `current_output`
     """
-    ###TODO
-    ###
-    pass
+    # Once a closing parenthesis appears without an opening one,
+    # keep the state invalid for the rest of the input.
+    if current_output < 0:
+        return current_output
+    return current_output + paren_map(next_input)
 
 #### Scan solution
 
@@ -110,9 +110,10 @@ def parens_match_scan(mylist):
     False
     
     """
-    ###TODO
-    ###
-    pass
+    values = list(map(paren_map, mylist))
+    prefix_sums, total = scan(plus, 0, values)
+    minimum = reduce(min_f, 0, prefix_sums)
+    return total == 0 and minimum >= 0
 
 def scan(f, id_, a):
     """
@@ -179,13 +180,21 @@ def parens_match_dc_helper(mylist):
       L is the number of unmatched left parentheses. This output is used by 
       parens_match_dc to return the final True or False value
     """
-    ###TODO
-    # base cases
-    
-    # recursive case
-    # - first solve subproblems
-    
-    # - then compute the solution (R,L) using these solutions, in constant time.
-    
-    ###
-    pass
+    # Return (unmatched right parentheses, unmatched left parentheses).
+    if len(mylist) == 0:
+        return (0, 0)
+    if len(mylist) == 1:
+        if mylist[0] == '(':
+            return (0, 1)
+        if mylist[0] == ')':
+            return (1, 0)
+        return (0, 0)
+
+    midpoint = len(mylist) // 2
+    right1, left1 = parens_match_dc_helper(mylist[:midpoint])
+    right2, left2 = parens_match_dc_helper(mylist[midpoint:])
+
+    # Opening parentheses in the first half can match closing
+    # parentheses in the second half.
+    matched = min(left1, right2)
+    return (right1 + right2 - matched, left1 + left2 - matched)
