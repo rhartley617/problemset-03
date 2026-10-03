@@ -9,9 +9,7 @@ import math
 
 # search an unordered list L for a key x using iterate
 def isearch(L, x):
-    ###TODO
-    ###
-    pass
+    return iterate(lambda found, y: found or y == x, False, L)
 
 def iterate(f, x, a):
     # done. do not change me.
