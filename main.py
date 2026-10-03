@@ -20,9 +20,9 @@ def iterate(f, x, a):
 
 # search an unordered list L for a key x using reduce
 def rsearch(L, x):
-    ###TODO
-    ###
-    pass
+    return reduce(lambda found1, found2: found1 or found2,
+                  False,
+                  [y == x for y in L])
 
 def reduce(f, id_, a):
     print(a)
