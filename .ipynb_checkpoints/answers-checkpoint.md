@@ -143,8 +143,20 @@ $W(n) =W(n -1) +1$
 
 
 
-- **2a.**
+- **2a.**  
+  $\operatorname{dedup}(A)=\operatorname{map}\left(\lambda i.\,A_i,\ \operatorname{filter}\left(\lambda i.\,\neg\operatorname{reduce}\left(\lambda x,j.\,x\lor(A_j=A_i),\mathrm{False},\langle 0,\ldots,i-1\rangle\right),\langle 0,\ldots,n-1\rangle\right)\right)$
 
+  Map handles a list of potentially $n$ unique entries in th worst case: $W_M(n) \in \Theta(n)$  
+  Filter processes a list of $n$ entries: $W_F(n) \in \Theta(n)$  
+  Reduce handles a list of $i$ entries, with $i \leq n -1$ being the index of the list Filter is currently processing.  
+  Work for one Reduce at index i: $W_R(i) = \Theta(i)$
+
+  Map runs once on the list filter returns. Filter runs a Reduce process for each entry in the list.  
+  $W_{dedup}(n) = W_F(n) + \sum_{i = 0}^{n - 1}W_R(i) + W_M(n)$  
+  $W_{dedup}(n) = \Theta(n) + \Theta(n^2) + \Theta(n)$  
+  $W_{dedup}(n) = \Theta(n^2) + 2\Theta(n)$
+
+  $\boxed{W_{dedup}(n) = \Theta(n^2)}$
 
 
 
