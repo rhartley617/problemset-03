@@ -59,7 +59,7 @@ $W(n) = W(n -1) + 1$
   $k = \lg n$  
 
   Substitute  
-  $W(n) = 2^{\lg n}W(\frac{n}{2^k}) + (2^{\lg n} - 1)$  
+  $W(n) = 2^{\lg n}W(\frac{n}{2^{\lg n}}) + (2^{\lg n} - 1)$  
   $W(n) = nW(1) + n - 1$
 
   $\boxed{W(n) \in \Theta(n)}$
@@ -154,7 +154,7 @@ $W(n) = W(n -1) + 1$
   Work for one Reduce at index i: $W_R(i) = \Theta(i)$
 
   Map runs once on the list filter returns. Filter runs a Reduce process for each entry in the list.  
-  $W_{dedup}(n) = W_F(n) + \sum_{i = 0}^{n - 1}W_R(i) + W_M(n)$  
+  $W_{dedup}(n) = W_F(n) + \sum_{i = 1}^{n - 1}W_R(i) + W_M(n)$  
   $W_{dedup}(n) = \Theta(n) + \Theta(n^2) + \Theta(n)$  
   $W_{dedup}(n) = \Theta(n^2) + 2\Theta(n)$
 
@@ -164,10 +164,10 @@ $W(n) = W(n -1) + 1$
   Map handles a list of potentially $n$ unique entries in the worst case, each one in parallel with constant time: $S_M(n) \in \Theta(1)$  
   Filter processes a list of $n$ entries, in parallel with a binary tree: $S_F(n) \in \Theta(\log n)$  
   Reduce handles a list of $i$ entries in parallel with a binary tree, with $i \leq n$ being the index of the list Filter is currently processing.  
-  The maximum size for one Reduce at index i: $\max_{0 \le i < n} S_R(i) = \max_{0 \le i < n} \Theta(\log i) \in \Theta(\log n)$  
+  The maximum size for one Reduce at index i: $\max_{1 \le i < n} S_R(i) = \max_{1 \le i < n} \Theta(\log i) \in \Theta(\log n)$  
   Adding that together gives us:
 
-  $S_{dedup}(n) = S_F(n) + \max_{0 \le i < n} S_R(i) + S_M(n)$  
+  $S_{dedup}(n) = S_F(n) + \max_{1 \le i < n} S_R(i) + S_M(n)$  
   $S_{dedup}(n) = \Theta(\log n) + \Theta(\log n) + \Theta(1)$  
   $S_{dedup}(n) = 2\Theta(\log n) + \Theta(1)$  
 
@@ -212,8 +212,8 @@ $W(n) = W(n -1) + 1$
   Reduce handles the $i$ preceding indices for the element currently being processed by Filter.  
   $W_R(i) = \Theta(i)$
 
-  $W_{multi-dedup}(N) = W_{flatten}(N) + W_{\text{filter}}(N) + \sum_{i=0}^{N-1} W_R(i) + W_M(N)$  
-  $W_{multi-dedup}(N) = \Theta(N) + \Theta(N) + \sum_{i=0}^{N-1} \Theta(i) + \Theta(N)$  
+  $W_{multi-dedup}(N) = W_{flatten}(N) + W_{\text{filter}}(N) + \sum_{i = 1}^{N-1} W_R(i) + W_M(N)$  
+  $W_{multi-dedup}(N) = \Theta(N) + \Theta(N) + \sum_{i = 1}^{N-1} \Theta(i) + \Theta(N)$  
   $W_{multi-dedup}(N) = 3\Theta(N) + \Theta(N^2)$
 
   ${W_{multi-dedup}(N) \in \Theta(N^2)}$
@@ -226,10 +226,10 @@ $W(n) = W(n -1) + 1$
   Filter processes a list of $N$ entries, in parallel with a binary tree: $S_{filter}(N) \in \Theta(\log N)$  
   Reduce handles a list of $i$ entries in parallel with a binary tree, where $(i \le N)$ is the index currently being processed by Filter.  
   $S_R(i) \in \Theta(\log i)$  
-  $\max_{0 \le i < N} S_R(i) = \max_{0 \le i < N} \Theta(\log i) \in \Theta(\log N)$  
+  $\max_{1 \le i < N} S_R(i) = \max_{1 \le i < N} \Theta(\log i) \in \Theta(\log N)$  
   Adding that together gives us:
 
-  $S_{\text{multi-dedup}}(N) = S_{\text{flatten}}(N) + S_{\text{filter}}(N) + \max_{0 \le i < N} S_R(i) + S_M(N)$  
+  $S_{\text{multi-dedup}}(N) = S_{\text{flatten}}(N) + S_{\text{filter}}(N) + \max_{1 \le i < N} S_R(i) + S_M(N)$  
   $S_{\text{multi-dedup}}(N) = \Theta(\log N) + \Theta(\log N) + \Theta(\log N) + \Theta(1)$  
   $S_{\text{multi-dedup}}(N) = 3\Theta(\log N) + \Theta(1)$
   
