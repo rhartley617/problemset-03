@@ -164,7 +164,7 @@ $W(n) =W(n -1) +1$
   Map handles a list of potentially $n$ unique entries in the worst case, each one in parralell with constant time: $S_M(n) \in \Theta(1)$  
   Filter processes a list of $n$ entries, in parallel with a binary tree: $S_F(n) \in \Theta(\log n)$  
   Reduce handles a list of $i$ entries in parallel with a binary tree, with $i \leq n$ being the index of the list Filter is currently processing.  
-  The maximum size for one Reduce at index i: $\max_{0 \le i < n} S_R(i) = \max_{0 \le i < n} \Theta(\log i) = \Theta(\log n)$  
+  The maximum size for one Reduce at index i: $\max_{0 \le i < n} S_R(i) = \max_{0 \le i < n} \Theta(\log i) \in \Theta(\log n)$  
   Adding that together gives us:
 
   $S_{dedup}(n) = S_F(n) + \max_{0 \le i < n} S_R(i) + S_M(n)$  
@@ -183,6 +183,7 @@ $W(n) =W(n -1) +1$
   $A$ is a list of lists indexed $A_0,\dots,A_m$. There are a total of m + 1 lists in A.  
   $n$ is the number of entries in each list. For this analysis the total number of entries in $A$ is $N = (m + 1)n$
  
+  <u>Work</u>  
   Flatten processes every entry in each list into one big list. $W_{flatten} = \Theta(N)$  
   Map handles a list of potentially $N$ unique entries in the worst case: $W_M(N) \in \Theta(N)$  
   Filter processes a list of $N$ entries: $W_{filter}(N) \in \Theta(N)$  
@@ -197,7 +198,24 @@ $W(n) =W(n -1) +1$
 
   $\boxed{{W_{multi-dedup}((m, n) \in \Theta((m + 1)^2n^2)}}$
 
+  <u>Span</u>  
+  Flatten processes a list of $N$ entries, in parallel with a binary tree: $S_{flatten}(N) \in \Theta(\log N)$  
+  Map handles a list of potentially $N$ unique entries in the worst case, each one in parralell with constant time: $S_M(N) \in \Theta(1)$  
+  Filter processes a list of $N$ entries, in parallel with a binary tree: $S_{filter}(N) \in \Theta(\log N)$  
+  Reduce handles a list of $i$ entries in parallel with a binary tree, where $(i \le N)$ is the index currently being processed by filter.  
+  $S_R(i) = \in \Theta(\log i)$  
+  $\max_{0 \le i < N} S_R(i) = \max_{0 \le i < N} \Theta(\log i) \in \Theta(\log N)$  
+  Adding that together gives us:
 
+  $S_{\text{multi-dedup}}(N) = S_{\text{flatten}}(N) + S_{\text{filter}}(N) + \max_{0 \le i < N} S_R(i) + S_M(N)$  
+  $S_{\text{multi-dedup}}(N) = \Theta(\log N) + \Theta(\log N) + \Theta(\log N) + \Theta(1)$  
+  $S_{\text{multi-dedup}}(N) = 3\Theta(\log N) + \Theta(1)$
+  
+  $S_{\text{multi-dedup}}(N) \in \Theta(\log N)$
+
+  $\boxed{{S_{multi-dedup}((m, n) \in \Theta(\log((m + 1)n))}}$
+
+  
 
 
 
