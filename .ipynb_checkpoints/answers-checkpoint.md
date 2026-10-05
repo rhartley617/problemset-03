@@ -158,7 +158,7 @@ $W(n) =W(n -1) +1$
   $W_{dedup}(n) = \Theta(n) + \Theta(n^2) + \Theta(n)$  
   $W_{dedup}(n) = \Theta(n^2) + 2\Theta(n)$
 
-  $\boxed{W_{dedup}(n) = \Theta(n^2)}$
+  $\boxed{W_{dedup}(n) \in \Theta(n^2)}$
 
   <u>Span</u>  
   Map handles a list of potentially $n$ unique entries in the worst case, each one in parralell with constant time: $S_M(n) \in \Theta(1)$  
@@ -171,14 +171,31 @@ $W(n) =W(n -1) +1$
   $S_{dedup}(n) = \Theta(\log n) + \Theta(\log n) + \Theta(1)$  
   $S_{dedup}(n) = 2\Theta(\log n) + \Theta(1)$  
 
-  $\boxed{S_{dedup}(n) = \Theta(\log n)}$
+  $\boxed{S_{dedup}(n) \in \Theta(\log n)}$
   
 
 
 
 
 - **2b.**  
-  $\boxed{\text{multi-dedup}(A)=\text{dedup}\left(\text{flatten}\left(\text{map}(\lambda X.\text{dedup}(X),A)\right)\right)}$
+  $\boxed{\text{multi-dedup}(A)=\text{let }B=\text{flatten}(A)\text{ in }\text{map}\left(\lambda i.\ B_i,\ \text{filter}\left(\lambda i.\ \neg\text{reduce}\left(\lambda x,j.\ x\lor(B_j=B_i),\text{False},\{0,\ldots,i-1\}\right),\{0,\ldots,N-1\}\right)\right)}$
+
+  $A$ is a list of lists indexed $A_0,\dots,A_m$. There are a total of m + 1 lists in A.  
+  $n$ is the number of entries in each list. For this analysis the total number of entries in $A$ is $N = (m + 1)n$
+ 
+  Flatten processes every entry in each list into one big list. $W_{flatten} = \Theta(N)$  
+  Map handles a list of potentially $N$ unique entries in the worst case: $W_M(N) \in \Theta(N)$  
+  Filter processes a list of $N$ entries: $W_{filter}(N) \in \Theta(N)$  
+  Reduce handles the $i$ preceding indices for the element currently being processed by Filter.  
+  $W_R(i) = \Theta(i)$
+
+  $W_{multi-dedup}(N) = W_{flatten}(N) + W_{\text{filter}}(N) + \sum_{i=0}^{N-1} W_R(i) + W_M(N)$  
+  $W_{multi-dedup}(N) = \Theta(N) + \Theta(N) + \sum_{i=0}^{N-1} \Theta(i) + \Theta(N)$  
+  $W_{multi-dedup}(N) = 3\Theta(N) + \Theta(N^2)$
+
+  ${W_{multi-dedup}(N) \in \Theta(N^2)}$
+
+  $\boxed{{W_{multi-dedup}((m, n) \in \Theta((m + 1)^2n^2)}}$
 
 
 
