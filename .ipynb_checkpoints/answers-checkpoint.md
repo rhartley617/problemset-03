@@ -342,5 +342,28 @@ $W(n) = W(n -1) + 1$
 
   $\boxed{W(n) \in \Theta(n)}$
 
+  $S(n) = S(\frac{n}{2}) + 1$
+
+  Level 1  
+  $S(n) = (S(\frac{n}{4}) + 1) + 1$  
+  $S(n) = S(\frac{n}{4}) + 2$  
+
+  Level 2  
+  $S(n) = (S(\frac{n}{8}) + 1) + 2$  
+  $S(n) = S(\frac{n}{8}) + 3$
+
+  Generalized Equation
+  $S(n) = S(\frac{n}{2^k}) + k$
+
+  Recursion Depth  
+  $\frac{n}{2^k} = 1$  
+  $n = 2^k$  
+  $k = \lg n$  
+
+  Substitute  
+  $S(n) = S(\frac{n}{2^{\lg n}}) + \lg n$  
+  $S(n) = S(1) + \lg n$  
+
+  $\boxed{S(n) \in \Theta(\lg n)}$
 
 
