@@ -144,8 +144,10 @@ $W(n) =W(n -1) +1$
 
 
 - **2a.**  
-  $\operatorname{dedup}(A)=\operatorname{map}\left(\lambda i.\,A_i,\ \operatorname{filter}\left(\lambda i.\,\neg\operatorname{reduce}\left(\lambda x,j.\,x\lor(A_j=A_i),\mathrm{False},\langle 0,\ldots,i-1\rangle\right),\langle 0,\ldots,n-1\rangle\right)\right)$
+  $\boxed{\operatorname{dedup}(A)=\operatorname{map}\left(\lambda i.\,A_i,\ \operatorname{filter}\left(\lambda i.\,\neg\operatorname{reduce}\left(\lambda x,j.\,x\lor(A_j=A_i),\mathrm{False},\langle 0,\ldots,i-1\rangle\right),\langle 0,\ldots,n-1\rangle\right)\right)}$
 
+
+  <u>Work</u>  
   Map handles a list of potentially $n$ unique entries in th worst case: $W_M(n) \in \Theta(n)$  
   Filter processes a list of $n$ entries: $W_F(n) \in \Theta(n)$  
   Reduce handles a list of $i$ entries, with $i \leq n -1$ being the index of the list Filter is currently processing.  
@@ -158,10 +160,25 @@ $W(n) =W(n -1) +1$
 
   $\boxed{W_{dedup}(n) = \Theta(n^2)}$
 
+  <u>Span</u>  
+  Map handles a list of potentially $n$ unique entries in the worst case, each one in parralell with constant time: $S_M(n) \in \Theta(1)$  
+  Filter processes a list of $n$ entries, in parallel with a binary tree: $S_F(n) \in \Theta(\log n)$  
+  Reduce handles a list of $i$ entries in parallel with a binary tree, with $i \leq n$ being the index of the list Filter is currently processing.  
+  The maximum size for one Reduce at index i: $\max_{0 \le i < n} S_R(i) = \max_{0 \le i < n} \Theta(\log i) = \Theta(\log n)$  
+  Adding that together gives us:
+
+  $S_{dedup}(n) = S_F(n) + \max_{0 \le i < n} S_R(i) + S_M(n)$  
+  $S_{dedup}(n) = \Theta(\log n) + \Theta(\log n) + \Theta(1)$  
+  $S_{dedup}(n) = 2\Theta(\log n) + \Theta(1)$  
+
+  $\boxed{S_{dedup}(n) = \Theta(\log n)}$
+  
 
 
 
-- **2b.**
+
+- **2b.**  
+  $\boxed{\text{multi-dedup}(A)=\text{dedup}\left(\text{flatten}\left(\text{map}(\lambda X.\text{dedup}(X),A)\right)\right)}$
 
 
 
