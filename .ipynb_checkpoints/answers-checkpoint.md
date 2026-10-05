@@ -219,7 +219,21 @@ $W(n) =W(n -1) +1$
 
 
 
-- **2c.**
+- **2c.**  
+  Sequence operations are useful in both dedup and multi-dedup because they allow for parallelism, which lowers span.  
+  Lowering span lowers total execution time for the algorithm provided there are enough processors to accomodate it.  
+
+  Parallelism $P_a$  
+
+  $P_a = \frac{W(n)}{S(n)}$  
+
+  Execution Time $T_P$, Processors $P$  
+
+  $T_P \geq \max{\left(\frac{W(n)}{P}, S(n)\right)}$  
+
+  When the number of processors $P$ approaches available parallelism $P_a$, the execution time $T_P$ approaches  
+  the span $S(n)$ so that $T_p \approx S(n)$. Adding more processors beyond this point will provide little improvement  
+  to execution time $T_P$.
 
 
 
