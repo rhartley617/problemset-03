@@ -148,7 +148,7 @@ $W(n) = W(n -1) + 1$
 
 
   <u>Work</u>  
-  Map handles a list of potentially $n$ unique entries in th worst case: $W_M(n) \in \Theta(n)$  
+  Map handles a list of potentially $n$ unique entries in the worst case: $W_M(n) \in \Theta(n)$  
   Filter processes a list of $n$ entries: $W_F(n) \in \Theta(n)$  
   Reduce handles a list of $i$ entries, with $i \leq n -1$ being the index of the list Filter is currently processing.  
   Work for one Reduce at index i: $W_R(i) = \Theta(i)$
@@ -161,7 +161,7 @@ $W(n) = W(n -1) + 1$
   $\boxed{W_{dedup}(n) \in \Theta(n^2)}$
 
   <u>Span</u>  
-  Map handles a list of potentially $n$ unique entries in the worst case, each one in parralell with constant time: $S_M(n) \in \Theta(1)$  
+  Map handles a list of potentially $n$ unique entries in the worst case, each one in parallel with constant time: $S_M(n) \in \Theta(1)$  
   Filter processes a list of $n$ entries, in parallel with a binary tree: $S_F(n) \in \Theta(\log n)$  
   Reduce handles a list of $i$ entries in parallel with a binary tree, with $i \leq n$ being the index of the list Filter is currently processing.  
   The maximum size for one Reduce at index i: $\max_{0 \le i < n} S_R(i) = \max_{0 \le i < n} \Theta(\log i) \in \Theta(\log n)$  
@@ -218,14 +218,14 @@ $W(n) = W(n -1) + 1$
 
   ${W_{multi-dedup}(N) \in \Theta(N^2)}$
 
-  $\boxed{{W_{multi-dedup}((m, n) \in \Theta((m + 1)^2n^2)}}$
+  $\boxed{{W_{multi-dedup}(m, n) \in \Theta((m + 1)^2n^2)}}$
 
   <u>Span</u>  
   Flatten processes a list of $N$ entries, in parallel with a binary tree: $S_{flatten}(N) \in \Theta(\log N)$  
-  Map handles a list of potentially $N$ unique entries in the worst case, each one in parralell with constant time: $S_M(N) \in \Theta(1)$  
+  Map handles a list of potentially $N$ unique entries in the worst case, each one in parallel with constant time: $S_M(N) \in \Theta(1)$  
   Filter processes a list of $N$ entries, in parallel with a binary tree: $S_{filter}(N) \in \Theta(\log N)$  
-  Reduce handles a list of $i$ entries in parallel with a binary tree, where $(i \le N)$ is the index currently being processed by filter.  
-  $S_R(i) = \in \Theta(\log i)$  
+  Reduce handles a list of $i$ entries in parallel with a binary tree, where $(i \le N)$ is the index currently being processed by Filter.  
+  $S_R(i) \in \Theta(\log i)$  
   $\max_{0 \le i < N} S_R(i) = \max_{0 \le i < N} \Theta(\log i) \in \Theta(\log N)$  
   Adding that together gives us:
 
@@ -235,7 +235,7 @@ $W(n) = W(n -1) + 1$
   
   $S_{\text{multi-dedup}}(N) \in \Theta(\log N)$
 
-  $\boxed{{S_{multi-dedup}((m, n) \in \Theta(\log((m + 1)n))}}$
+  $\boxed{{S_{multi-dedup}(m, n) \in \Theta(\log((m + 1)n))}}$
 
   
 
@@ -243,7 +243,7 @@ $W(n) = W(n -1) + 1$
 
 - **2c.**  
   Sequence operations are useful in both dedup and multi-dedup because they allow for parallelism, which lowers span.  
-  Lowering span lowers total execution time for the algorithm provided there are enough processors to accomodate it.  
+  Lowering span lowers total execution time for the algorithm provided there are enough processors to accommodate it.  
 
   Parallelism $P_a$  
 
@@ -254,7 +254,7 @@ $W(n) = W(n -1) + 1$
   $T_P \geq \max{\left(\frac{W(n)}{P}, S(n)\right)}$  
 
   When the number of processors $P$ approaches available parallelism $P_a$, the execution time $T_P$ approaches  
-  the span $S(n)$ so that $T_p \approx S(n)$. Adding more processors beyond this point will provide little improvement  
+  the span $S(n)$ so that $T_P \approx S(n)$. Adding more processors beyond this point will provide little improvement  
   to execution time $T_P$.
 
 
@@ -317,7 +317,7 @@ $W(n) = W(n -1) + 1$
 
   <u>Work</u>    
   Scan (efficient contraction version): $W_s(n) = W_s(\frac{n}{2}) + \Theta(n)$. The work across all levels follows this pattern: $n\left(1 + \frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \dots\right)$. $W_s(n) \in \Theta(n)$.  
-  Map applies paren_map to all $n$ entries; each application takes constant work.$W_m(n) = n\Theta(1)$. $W_m(n) \in \Theta(n)$  
+  Map applies paren_map to all $n$ entries; each application takes constant work. $W_m(n) = n\Theta(1)$. $W_m(n) \in \Theta(n)$  
   Reduce processes all entries in parallel using a binary tree. Work is split in half, but both halves are processed. $W_r(n) = 2W_r(\frac{n}{2}) + \Theta(1)$. $W_r(n) \in \Theta(n)$  
 
   $W_{parens\_match\_scan}(n) = W_s(n) + W_m(n) + W_r(n) + \Theta(1)$  
