@@ -10,7 +10,7 @@ Place all written answers from `problemset-03.md` here for easier grading.
 
 
 - **1b.**  
-$W(n) =W(n -1) +1$
+$W(n) = W(n -1) + 1$
 
     Level 1  
   $W(n) = (W(n -1 -1) + 1) + 1$  
@@ -24,7 +24,7 @@ $W(n) =W(n -1) +1$
     $W(n) = W(n - k) + k$
 
   Recursion Depth  
-  $n - k = 0$
+  $n - k = 0$  
   $k = n$
 
   Substitute  
@@ -240,7 +240,52 @@ $W(n) =W(n -1) +1$
 
 
 
-- **3b.**
+- **3b.**   
+  $W(n) =  W(n - 1) + 1$  
+
+  Level 1  
+  $W(n) = (W(n -1 -1) + 1) + 1$  
+  $W(n) = W(n -2) + 2$
+
+  Level 2  
+  $W(n) = (W(n-2 - 1) + 1) + 2$  
+  $W(n) = W(n - 3) + 3$
+
+  Generalized Equation  
+  $W(n) = W(n - k) + k$
+
+  Recursion Depth  
+  $n - k = 0$  
+  $k = n$
+
+  Substitute  
+  $W(n) = W(n - n) + n$  
+  $W(n) = W(0) + n$
+
+  $\boxed{W(n) \in \Theta(n)}$
+
+  $S(n) =  S(n - 1) + 1$  
+
+  Level 1  
+  $S(n) = (S(n -1 -1) + 1) + 1$  
+  $S(n) = S(n -2) + 2$
+
+  Level 2  
+  $S(n) = (S(n-2 - 1) + 1) + 2$  
+  $S(n) = S(n - 3) + 3$
+
+  Generalized Equation  
+  $S(n) = S(n - k) + k$
+
+  Recursion Depth  
+  $n - k = 0$  
+  $k = n$
+
+  Substitute  
+  $S(n) = S(n - n) + n$  
+  $S(n) = S(0) + n$
+
+  $\boxed{S(n) \in \Theta(n)}$
 
 
 
