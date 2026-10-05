@@ -1,7 +1,7 @@
 # CMPS 6610 Problem Set 03
 ## Answers
 
-**Name:<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rob Hartley</u>___________
+**Name:** \underline{\hspace{1in}Rob Hartley\hspace{1in}}
 
 
 Place all written answers from `problemset-03.md` here for easier grading.
@@ -103,7 +103,7 @@ $W(n) = W(n -1) + 1$
   $W(n) = W(\frac{n}{9}) + 2W(\frac{2n}{9}) + W(\frac{4n}{9}) + 3$
 
   Observations  
-  $\frac{n}{9} + \frac{2n}{9} \frac{2n}{9} + \frac{4n}{9} = n$  
+  $\frac{n}{9} + \frac{2n}{9} + \frac{2n}{9} + \frac{4n}{9} = n$  
   Subproblem sizes sum to n.  
   Changes to parallelism do not affect total work. The ureduce algorithm performs the same overall computation as the reduce algorithm with different parallelism.  
   Both of these algorithms should therefore require the same work.  
@@ -178,7 +178,29 @@ $W(n) = W(n -1) + 1$
 
 
 - **2b.**  
-  $\boxed{\text{multi-dedup}(A)=\text{let }B=\text{flatten}(A)\text{ in }\text{map}\left(\lambda i.\ B_i,\ \text{filter}\left(\lambda i.\ \neg\text{reduce}\left(\lambda x,j.\ x\lor(B_j=B_i),\text{False},\{0,\ldots,i-1\}\right),\{0,\ldots,N-1\}\right)\right)}$
+
+  \makebox[\textwidth][l]{
+  $
+  \boxed{
+  \begin{aligned}
+  \text{multi-dedup}(A)
+  &= \text{let } B=\text{flatten}(A) \text{ in} \\
+  &\quad \text{map}\Bigl(
+      \lambda i.\ B_i, \\
+  &\qquad \text{filter}\Bigl(
+      \lambda i.\ \neg \text{reduce}\bigl(
+          \lambda x,j.\ x \lor (B_j=B_i), \\
+  &\qquad\qquad \text{False},
+          \{0,\ldots,i-1\}
+      \bigr), \\
+  &\qquad\qquad \{0,\ldots,N-1\}
+      \Bigr)
+  \Bigr)
+  \end{aligned}
+  }
+  $
+  }
+
 
   $A$ is a list of lists indexed $A_0,\dots,A_m$. There are a total of m + 1 lists in A.  
   $n$ is the number of entries in each list. For this analysis the total number of entries in $A$ is $N = (m + 1)n$
