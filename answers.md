@@ -306,19 +306,41 @@ $W(n) = W(n -1) + 1$
   
   <u>Span</u>  
   Scan (efficient contraction version): $S_s(n) = S_s(\frac{n}{2}) + \Theta(1)$. There are $\log_2 n$ recursion levels. $S_s(n) \in \Theta(\log n)$  
-  Map applies paren_map to all $n$ entries; each application takes constant work. For span, we're only looking at one of those applications. $S_m(n) \in \Theta(1)$  
+  Map applies paren_map to all $n$ entries in parallel and each application takes constant work. $S_m(n) \in \Theta(1)$  
   Reduce processes all entries in parallel using a binary tree. There are $\log_2 n$ recursion levels. $S_r(n) \in \Theta(\log n)$  
 
   $S_{parens\_match\_scan}(n) = S_s(n) + S_m(n) + S_r(n) + \Theta(1)$  
-  $W_{parens\_match\_scan}(n) = \Theta(\log n) + \Theta(1) +\Theta(\log n) +\Theta(1)$  
-  $W_{parens\_match\_scan}(n) = 2\Theta(\log n) + 2\Theta(1)$  
+  $S_{parens\_match\_scan}(n) = \Theta(\log n) + \Theta(1) +\Theta(\log n) +\Theta(1)$  
+  $S_{parens\_match\_scan}(n) = 2\Theta(\log n) + 2\Theta(1)$  
 
-  $\boxed{W_{parens\_match\_scan}(n) \in \Theta(\log n)}$
+  $\boxed{S_{parens\_match\_scan}(n) \in \Theta(\log n)}$
    
 
 
-- **3f.**
+- **3f.**  
+  $W(n) = 2W(\frac{n}{2}) + 1$  
 
+  Level 1  
+  $W(n) = 2 \cdot (2W(\frac{n}{4}) + 1) + 1$  
+  $W(n) = 4W(\frac{n}{4}) + 3$  
+
+  Level 2  
+  $W(n) = 4 \cdot (2W(\frac{n}{8}) + 1) + 3$  
+  $W(n) = 8W(\frac{n}{8}) + 7$
+
+  Generalized Equation  
+  $W(n) = 2^kW(\frac{n}{2^k}) + (2^k - 1)$  
+
+  Recursion Depth  
+  $\frac{n}{2^k} = 1$  
+  $n = 2^k$  
+  $k = \lg n$
+
+  Substitute  
+  $W(n) = 2^{\lg n} W(\frac{n}{2^{\lg n}}) + (2^{\lg n} - 1)$  
+  $W(n) = n \cdot W(1) + (n - 1)$  
+
+  $\boxed{W(n) \in \Theta(n)}$
 
 
 
