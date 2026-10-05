@@ -291,10 +291,30 @@ $W(n) = W(n -1) + 1$
 
 
 
-- **3d.**
+- **3d.**  
 
+  <u>Work</u>    
+  Scan (efficient contraction version): $W_s(n) = W_s(\frac{n}{2}) + \Theta(n)$. The work across all levels follows this pattern: $n\left(1 + \frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \dots\right)$. $W_s(n) \in \Theta(n)$.  
+  Map applies paren_map to all $n$ entries; each application takes constant work.$W_m(n) = n\Theta(1)$. $W_m(n) \in \Theta(n)$  
+  Reduce processes all entries in parallel using a binary tree. Work is split in half, but both halves are processed. $W_r(n) = 2W_r(\frac{n}{2}) + \Theta(1)$. $W_r(n) \in \Theta(n)$  
 
+  $W_{parens\_match\_scan}(n) = W_s(n) + W_m(n) + W_r(n) + \Theta(1)$  
+  $W_{parens\_match\_scan}(n) = \Theta(n) + \Theta(n) +\Theta(n) +\Theta(1)$  
+  $W_{parens\_match\_scan}(n) = 3\Theta(n) +\Theta(1)$  
 
+  $\boxed{W_{parens\_match\_scan}(n) \in \Theta(n)}$  
+  
+  <u>Span</u>  
+  Scan (efficient contraction version): $S_s(n) = S_s(\frac{n}{2}) + \Theta(1)$. There are $\log_2 n$ recursion levels. $S_s(n) \in \Theta(\log n)$  
+  Map applies paren_map to all $n$ entries; each application takes constant work. For span, we're only looking at one of those applications. $S_m(n) \in \Theta(1)$  
+  Reduce processes all entries in parallel using a binary tree. There are $\log_2 n$ recursion levels. $S_r(n) \in \Theta(\log n)$  
+
+  $S_{parens\_match\_scan}(n) = S_s(n) + S_m(n) + S_r(n) + \Theta(1)$  
+  $W_{parens\_match\_scan}(n) = \Theta(\log n) + \Theta(1) +\Theta(\log n) +\Theta(1)$  
+  $W_{parens\_match\_scan}(n) = 2\Theta(\log n) + 2\Theta(1)$  
+
+  $\boxed{W_{parens\_match\_scan}(n) \in \Theta(\log n)}$
+   
 
 
 - **3f.**
